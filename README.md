@@ -1,2 +1,5 @@
-# on-change-process-refresher-sh
-Reloads processes on change in the workdir.
+## Process refresher
+Receives a process and starts it. Once a change in the directory is detected the process is restarted.
+
+# Dependencies 
+	inotify-tools
