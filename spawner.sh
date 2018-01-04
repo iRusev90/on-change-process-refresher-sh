@@ -4,8 +4,9 @@ scriptExecutor=$1
 scriptFile=$2
 processToRefreshStartCommand="$scriptExecutor $scriptFile"
 reloaderHomeDir=$(dirname $0)"/"
+flagFileDir=$reloaderHomeDir"tmp/"
 reloaderLogFile="$reloaderHomeDir""log/reloader.log"
-removeFlagFileCommand="rm -f $reloaderHomeDir$2.flag"
+removeFlagFileCommand="rm -f "$flagFileDir$2".flag*"
 isFirstWhileIteration=true
 
 function showProcessRestartedSign {
@@ -28,7 +29,7 @@ function log {
 }
 
 function onScriptFirstStartSugar {
-    log "starting script $scriptFile"
+    log "evaluating '$processToRefreshStartCommand'"
     echo ""
     echo ""
     isFirstWhileIteration=false
@@ -48,16 +49,17 @@ function logEventsAndPrettifyConsole {
 }
 
 eval $removeFlagFileCommand
-sleep 1 && echo "" > $reloaderHomeDir$2.flag &
+sleep 1 && echo "" > $flagFileDir$2.flag &
 
 while [ 1 == 1 ]
 do
-    alterationDetails=$(inotifywait -e modify,create  $reloaderHomeDir)
+    alterationDetails=$(inotifywait -e modify,create  $flagFileDir)
     if [[ "$alterationDetails" == *"$2.flag"* ]] # if inotifywait output contains substring of arg 2
     then
+		log "removing flag file: $removeFlagFileCommand"
+        eval $removeFlagFileCommand
         logEventsAndPrettifyConsole
         eval $processToRefreshStartCommand 
-        eval $removeFlagFileCommand
     else 
         log "%alterationDetails does not match %2" 
         log "$alterationDetails" 

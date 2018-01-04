@@ -1,5 +1,7 @@
 log/*
+tmp/*
 !log/.gitkeep
+!tmp/.gitkeep
 
 
 
