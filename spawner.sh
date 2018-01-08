@@ -53,7 +53,7 @@ sleep 1 && echo "" > $flagFileDir$2.flag &
 
 while [ 1 == 1 ]
 do
-	alterationDetails=$(inotifywait -e modify,create  $flagFileDir)
+	alterationDetails=$(inotifywait -q -e modify,create  $flagFileDir)
 	if [[ "$alterationDetails" == *"$2.flag"* ]] # if inotifywait output contains substring of arg 2
 	then
 		log "removing flag file: $removeFlagFileCommand"

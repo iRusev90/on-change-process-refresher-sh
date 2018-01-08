@@ -14,7 +14,7 @@ function log {
 }
 
 flagIteration=0
-inotifywait -m -e modify  $currentDir | while read alterationDetails
+inotifywait -q -m -e modify  $currentDir | while read alterationDetails
 do
     if [[ "$alterationDetails" == *"$scriptFile"* ]] 
     then
