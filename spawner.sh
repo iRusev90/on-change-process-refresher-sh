@@ -32,6 +32,9 @@ function onScriptFirstStartSugar {
 	log "evaluating '$processToRefreshStartCommand'"
 	echo ""
 	echo ""
+	echo Starting \"$processToRefreshStartCommand\"
+	echo ""
+	echo ""
 	isFirstWhileIteration=false
 }
 
